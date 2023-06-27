@@ -1,21 +1,19 @@
-import { wrap } from "@netlify/integrations";
 import { withAuth0 } from "@netlify/auth0";
 
-const withIntegrations = wrap(withAuth0);
-
-export const handler = withIntegrations(
+export const handler = withAuth0(
   async (event, context) => {
     const message = "This is an admin message.";
 
     return {
       statusCode: 200,
-      body: JSON.stringify(message),
+      body: JSON.stringify({ message }),
     };
   },
   {
     auth0: {
       required: true,
       roles: ["Admin"],
+      permissions: {}
     },
   }
 );
